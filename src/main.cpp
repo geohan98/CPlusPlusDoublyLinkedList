@@ -16,10 +16,22 @@
 #include <iostream>
 #include "doubleLinkedList.h"
 
-void main() /** Entry point for the application */
+int main() /** Entry point for the application */
 {
-	DoubleLinkedList myList;
-	
+	DoubleLinkedList<int> myList;
+
+	myList.pushFront(10);
+	myList.pushFront(100);
+	myList.pushFront(1000);
+	myList.pushFront(100);
+	myList.pushFront(10);
+
+	while (myList.getSize() != 0)
+	{
+		std::cout << myList.removeFront() << endl;
+	}
+
 	_CrtDumpMemoryLeaks(); // Look in the output window for a report
 	system("pause");
+	return 0;
 }
