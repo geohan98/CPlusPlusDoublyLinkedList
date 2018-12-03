@@ -16,24 +16,26 @@ private:
 	shared_ptr<ListNode> previous;
 	G data;
 public:
-	ListNode(G newData, shared_ptr<ListNode<G>>& newNext, shared_ptr<ListNode<G>>& newPrevious);
+	ListNode(G newElement);
 	G getData();
 	shared_ptr<ListNode> getNext();
+	void setNext(shared_ptr<ListNode<G>> newNext);
 	shared_ptr<ListNode> getPrevious();
+	void setPrevious(shared_ptr<ListNode<G>> newPrevious);
 };
 
 template<class G>
-inline ListNode<G>::ListNode(G newData, shared_ptr<ListNode<G>>& newNext, shared_ptr<ListNode<G>>& newPrevious)
+inline ListNode<G>::ListNode(G newElement)
 {
-	data = newData;
-	next = newNext;
-	previous = newPrevious;
+	data = newElement;
+	next = nullptr;
+	previous = nullptr;
 }
 
 template<class G>
 inline G ListNode<G>::getData()
 {
-	return data();
+	return data;
 }
 
 template<class G>
@@ -43,7 +45,19 @@ inline shared_ptr<ListNode<G>> ListNode<G>::getNext()
 }
 
 template<class G>
+inline void ListNode<G>::setNext(shared_ptr<ListNode<G>> newNext)
+{
+	next = newNext;
+}
+
+template<class G>
 inline shared_ptr<ListNode<G>> ListNode<G>::getPrevious()
 {
-	return previous();
+	return previous;
+}
+
+template<class G>
+inline void ListNode<G>::setPrevious(shared_ptr<ListNode<G>> newPrevious)
+{
+	previous = newPrevious;
 }

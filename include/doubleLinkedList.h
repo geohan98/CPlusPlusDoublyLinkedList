@@ -48,26 +48,75 @@ inline DoubleLinkedList<G>::DoubleLinkedList()
 template<class G>
 inline void DoubleLinkedList<G>::pushFront(G newElement)
 {
-	front = shared_ptr<ListNode<G>>(new ListNode<G>(newElement, front, nullptr));
+	shared_ptr<ListNode<G>> tmp = shared_ptr<ListNode<G>>(new ListNode<G>(newElement));
+	if (front != nullptr)
+	{
+		tmp->setNext(front);
+		front->setPrevious(tmp);
+	}
+	if (back == nullptr)
+	{
+		back = tmp;
+	}
+	if (current == nullptr)
+	{
+		current = tmp;
+	}
+	front = tmp;
 	size++;
 }
 
 template<class G>
 inline void DoubleLinkedList<G>::pushBack(G newElement)
 {
-	back = shared_ptr<ListNode<G>>(new ListNode<G>(newElement, nullptr, back));
+	shared_ptr<ListNode<G>> tmp = shared_ptr<ListNode<G>>(new ListNode<G>(newElement));
+	tmp->setPrevious(back);
+	if (back != nullptr)
+	{
+		back->setNext(tmp);
+	}
+	if (front == nullptr)
+	{
+		front = tmp;
+	}
+	if (current == nullptr)
+	{
+		current = tmp;
+	}
+	back = tmp;
 	size++;
 }
 
 template<class G>
 inline void DoubleLinkedList<G>::pushFrontCurrent(G newElement)
 {
+	shared_ptr<ListNode<G>> tmp = shared_ptr<ListNode<G>>(new ListNode<G>(newElement));
+	tmp->setNext(current);
+	tmp->setPrevious(current->getPrevious());
+	current->setPrevious(tmp);
+	tmp->getPrevious()->setNext(tmp);
+
+	if (current == front)
+	{
+		tmp = front;
+	}
+
 	size++;
 }
 
 template<class G>
 inline void DoubleLinkedList<G>::pushBackCurrent(G newElement)
 {
+	shared_ptr<ListNode<G>> tmp = shared_ptr<ListNode<G>>(new ListNode<G>(newElement));
+	tmp->setPrevious(current);
+	tmp->setNext(current->getNext());
+	current->setNext(tmp);
+	tmp->getNext()->setPrevious(tmp);
+
+	if (current = back)
+	{
+		back = tmp;
+	}
 	size++;
 }
 
@@ -75,6 +124,10 @@ template<class G>
 inline G DoubleLinkedList<G>::removeFront()
 {
 	G result = front->getData();
+	if (front == current)
+	{
+		current = current->getNext();
+	}
 	front = front->getNext();
 	size--;
 	return result;
@@ -83,7 +136,14 @@ inline G DoubleLinkedList<G>::removeFront()
 template<class G>
 inline void DoubleLinkedList<G>::removeBack()
 {
+	G result = back->getData();
+	if (back == current)
+	{
+		current = current->getPrevious();
+	}
+	back = back->getPrevious();
 	size--;
+	return result;
 }
 
 template<class G>
@@ -113,7 +173,7 @@ inline G DoubleLinkedList<G>::getFront()
 template<class G>
 inline G DoubleLinkedList<G>::getBack()
 {
-	return front->getData();
+	return back->getData();
 }
 
 template<class G>
