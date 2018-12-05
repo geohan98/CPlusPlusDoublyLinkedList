@@ -21,20 +21,19 @@ int main() /** Entry point for the application */
 	DoubleLinkedList<int> myList;
 
 	myList.pushFront(1);
-	myList.pushBack(2);
-	myList.pushBack(3);
-	myList.pushBack(4);
-	myList.pushBack(5);
+	myList.pushFront(2);
+	myList.pushFront(3);
 
-	std::cout << "Front:" << myList.getFront() << endl;
-	std::cout << "Back:" << myList.getBack() << endl;
-	std::cout << "Current:" << myList.getCurrent() << endl;
+	std::cout << "Front: " << myList.getFront() << endl;
+	std::cout << "Current: " << myList.getCurrent() << endl;
+	std::cout << "Back: " << myList.getBack() << endl;
 
-	myList.pushFrontCurrent(69);
+	myList.sortAccending();
 
-	std::cout << "Front:" << myList.getFront() << endl;
-	std::cout << "Back:" << myList.getBack() << endl;
-	std::cout << "Current:" << myList.getCurrent() << endl;
+	std::cout << "Front: " << myList.getFront() << endl;
+	std::cout << "Current: " << myList.getCurrent() << endl;
+	std::cout << "Back: " << myList.getBack() << endl;
+
 
 	while (myList.getSize() != 0)
 	{

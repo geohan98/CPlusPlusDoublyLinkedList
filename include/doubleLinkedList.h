@@ -25,7 +25,7 @@ public :
 	void pushBackCurrent(G newElement); //Push node after Current
 	G removeFront(); //Remove the First Element
 	void removeBack(); //Remove the Last Element
-	void sort(); //Sorts the List Assending
+	void sortAccending(); //Sorts the List Assending
 
 	bool isEmpty(); //Retunes whether list is empty
 	unsigned int getSize(); //Retunrs size of List
@@ -94,11 +94,14 @@ inline void DoubleLinkedList<G>::pushFrontCurrent(G newElement)
 	tmp->setNext(current);
 	tmp->setPrevious(current->getPrevious());
 	current->setPrevious(tmp);
-	tmp->getPrevious()->setNext(tmp);
+	if (tmp->getPrevious() != nullptr)
+	{
+		tmp->getPrevious()->setNext(tmp);
+	}
 
 	if (current == front)
 	{
-		tmp = front;
+		front = tmp;
 	}
 
 	size++;
@@ -111,7 +114,10 @@ inline void DoubleLinkedList<G>::pushBackCurrent(G newElement)
 	tmp->setPrevious(current);
 	tmp->setNext(current->getNext());
 	current->setNext(tmp);
-	tmp->getNext()->setPrevious(tmp);
+	if (tmp->getNext() != nullptr)
+	{
+		tmp->getNext()->setPrevious(tmp);
+	}
 
 	if (current = back)
 	{
@@ -147,9 +153,25 @@ inline void DoubleLinkedList<G>::removeBack()
 }
 
 template<class G>
-inline void DoubleLinkedList<G>::sort()
+inline void DoubleLinkedList<G>::sortAccending()
 {
-
+	while (current->getPrevious() != nullptr)
+	{
+		moveBack();
+	}
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size - i - 1; j++)
+		{
+			if (current->getData() > current->getNext()->getData())
+			{
+				G tmp = current->getData();
+				current->setData(current->getNext()->getData());
+				current->getNext()->setData(tmp);
+			}
+			moveForward();
+		}
+	}
 }
 
 template<class G>
@@ -185,11 +207,17 @@ inline G DoubleLinkedList<G>::getCurrent()
 template<class G>
 inline void DoubleLinkedList<G>::moveForward()
 {
-	current = current->getNext();
+	if (current != back)
+	{
+		current = current->getNext();
+	}
 }
 
 template<class G>
 inline void DoubleLinkedList<G>::moveBack()
 {
-	current = current->getPrevious();
+	if (current != front)
+	{
+		current = current->getPrevious();
+	}
 }

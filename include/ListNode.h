@@ -18,6 +18,7 @@ private:
 public:
 	ListNode(G newElement);
 	G getData();
+	void setData(G newData);
 	shared_ptr<ListNode> getNext();
 	void setNext(shared_ptr<ListNode<G>> newNext);
 	shared_ptr<ListNode> getPrevious();
@@ -36,6 +37,12 @@ template<class G>
 inline G ListNode<G>::getData()
 {
 	return data;
+}
+
+template<class G>
+inline void ListNode<G>::setData(G newData)
+{
+	data = newData;
 }
 
 template<class G>
