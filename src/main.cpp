@@ -12,27 +12,22 @@
 #define _CRTDBG_MAP_ALLOC  
 #include <stdlib.h>  
 #include <crtdbg.h>  
-
+#include <random>
+#include <time.h>
 #include <iostream>
 #include "doubleLinkedList.h"
 
 int main() /** Entry point for the application */
 {
 	DoubleLinkedList<int> myList;
+	srand(time(0));
+	for (int i = 0; i < 1; i++) 
+	{
+		myList.pushFront(rand() % 100);
+	}
 
-	myList.pushFront(1);
-	myList.pushFront(2);
-	myList.pushFront(3);
-
-	std::cout << "Front: " << myList.getFront() << endl;
-	std::cout << "Current: " << myList.getCurrent() << endl;
-	std::cout << "Back: " << myList.getBack() << endl;
 
 	myList.sortAccending();
-
-	std::cout << "Front: " << myList.getFront() << endl;
-	std::cout << "Current: " << myList.getCurrent() << endl;
-	std::cout << "Back: " << myList.getBack() << endl;
 
 
 	while (myList.getSize() != 0)

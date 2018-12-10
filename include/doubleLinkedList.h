@@ -136,6 +136,7 @@ inline G DoubleLinkedList<G>::removeFront()
 	}
 	front = front->getNext();
 	size--;
+
 	return result;
 }
 
@@ -155,21 +156,45 @@ inline void DoubleLinkedList<G>::removeBack()
 template<class G>
 inline void DoubleLinkedList<G>::sortAccending()
 {
-	while (current->getPrevious() != nullptr)
-	{
-		moveBack();
-	}
+
 	for (int i = 0; i < size; i++)
 	{
+		current = front;
 		for (int j = 0; j < size - i - 1; j++)
 		{
 			if (current->getData() > current->getNext()->getData())
 			{
-				G tmp = current->getData();
-				current->setData(current->getNext()->getData());
-				current->getNext()->setData(tmp);
+				//Swap
+				shared_ptr<ListNode<G>> tmp1 = current->getPrevious();
+				shared_ptr<ListNode<G>> tmp2 = current;
+				shared_ptr<ListNode<G>> tmp3 = current->getNext();
+				shared_ptr<ListNode<G>> tmp4 = current->getNext()->getNext();
+
+				if (tmp1 !=nullptr)
+				{
+					tmp1->setNext(tmp3);
+				}
+				else
+				{
+					front = tmp3;
+				}
+				tmp2->setNext(tmp4);
+				tmp2->setPrevious(tmp3);
+				tmp3->setNext(tmp2);
+				tmp3->setPrevious(tmp1);
+				if (tmp4 != nullptr)
+				{
+					tmp4->setPrevious(tmp2);
+				}
+				else
+				{
+					back = tmp2;
+				}
 			}
-			moveForward();
+			else
+			{
+				moveForward();
+			}
 		}
 	}
 }
