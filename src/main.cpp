@@ -21,18 +21,43 @@ int main() /** Entry point for the application */
 {
 	DoubleLinkedList<int> myList;
 	srand(time(0));
-	for (int i = 0; i < 1; i++) 
+	for (int i = 0; i < 10; i++) 
 	{
 		myList.pushFront(rand() % 100);
 	}
 
+	cout << "<--Generate List-->" << endl << endl;
+	myList.printList();
 
+	cout << endl << "<--Sorting List Accending-->" << endl << endl;
 	myList.sortAccending();
+	myList.printList();
 
+	cout << endl << "<--Remove Front-->" << endl << endl;
+	myList.removeFront();
+	myList.printList();
+
+	cout << endl << "<--Remove Back-->" << endl << endl;
+	myList.removeBack();
+	myList.printList();
+
+	cout << endl << "<--Move Current Back-->" << endl << endl;
+	cout << "Current = " << myList.getCurrent() << endl;
+	myList.moveBack();
+	cout << "Current = " << myList.getCurrent() << endl;
+
+	cout << endl << "<--Remove Current-->" << endl << endl;
+	myList.removeCurrent();
+	myList.printList();
+
+	cout << endl << "<--Push Infront Current-->" << endl << endl;
+	cout << "Current = " << myList.getCurrent() << endl;
+	myList.pushFrontCurrent(33);
+	myList.printList();
 
 	while (myList.getSize() != 0)
 	{
-		std::cout << myList.removeFront() << endl;
+		myList.removeBack();
 	}
 
 	_CrtDumpMemoryLeaks(); // Look in the output window for a report

@@ -13,27 +13,79 @@ template<class G>
 class DoubleLinkedList
 {
 private :
-	unsigned int size;
-	shared_ptr<ListNode<G>> front;
-	shared_ptr<ListNode<G>> back;
-	shared_ptr<ListNode<G>> current;
+	unsigned int size; //!< Size of List
+	shared_ptr<ListNode<G>> front; //!< Pointer to front of List
+	shared_ptr<ListNode<G>> back; //!< Pointer to back of List
+	shared_ptr<ListNode<G>> current; //!< Pointer to current element in list
 public :
+	//! Contructor
 	DoubleLinkedList();
-	void pushFront(G newElement); //Push node at Front
-	void pushBack(G newElement); //Push node at Back
-	void pushFrontCurrent(G newElement); //Push node before Current
-	void pushBackCurrent(G newElement); //Push node after Current
-	G removeFront(); //Remove the First Element
-	void removeBack(); //Remove the Last Element
-	void sortAccending(); //Sorts the List Assending
 
-	bool isEmpty(); //Retunes whether list is empty
-	unsigned int getSize(); //Retunrs size of List
-	G getFront(); //Returns First Element
-	G getBack(); //Returns Last Element
-	G getCurrent(); //Returns Last Element
-	void moveForward(); //Move Current Forward
-	void moveBack(); //Move Current Back
+	//!Push node at Front
+	/*!
+	\param newElement G, new element to be added
+	*/
+	void pushFront(G newElement);
+
+	//!Push node at Back
+	/*!
+	\param newElement G, new element to be added
+	*/
+	void pushBack(G newElement);
+
+	//!Push node before Current
+	/*!
+	\param newElement G, new element to be added
+	*/
+	void pushFrontCurrent(G newElement);
+
+	//!Push node after Current
+	/*!
+	\param newElement G, new element to be added
+	*/
+	void pushBackCurrent(G newElement);
+
+	//!Remove the First Element
+	G removeFront();
+
+	//!Remove the Last Element
+	G removeBack();
+
+	//!Remove the Current Element
+	G removeCurrent();
+
+	//!Sorts the List Assending
+	void sortAccending();
+
+	//!Retunes whether list is empty
+	bool isEmpty();
+
+	//!Retunrs size of List
+	unsigned int getSize();
+
+	//!Returns First Element
+	G getFront();
+
+	//!Returns Last Element
+	G getBack();
+
+	//!Returns Last Element
+	G getCurrent();
+
+	//!Move Current Forward
+	void moveForward();
+
+	//!Move Current Back
+	void moveBack();
+
+	//!Current to the Front
+	void moveCurrentToFront();
+
+	//!Current to the Back
+	void moveCurrentToBack();
+
+	//!Prints List
+	void printList();
 };
 
 template<class G>
@@ -63,6 +115,7 @@ inline void DoubleLinkedList<G>::pushFront(G newElement)
 		current = tmp;
 	}
 	front = tmp;
+	tmp = nullptr;
 	size++;
 }
 
@@ -130,27 +183,103 @@ template<class G>
 inline G DoubleLinkedList<G>::removeFront()
 {
 	G result = front->getData();
-	if (front == current)
+	if (front == current && front == back)
 	{
-		current = current->getNext();
+		current = nullptr;
+		front = nullptr;
+		back = nullptr;
 	}
-	front = front->getNext();
+	else if (front == current)
+	{
+		current = front->getNext();
+	}
+	else
+	{
+		front = front->getNext();
+	}
+	if (front != nullptr)
+	{
+		front->setPrevious(nullptr);
+	}
+	
 	size--;
 
 	return result;
 }
 
 template<class G>
-inline void DoubleLinkedList<G>::removeBack()
+inline G DoubleLinkedList<G>::removeBack()
 {
 	G result = back->getData();
-	if (back == current)
+	if (back == current && back == front)
 	{
-		current = current->getPrevious();
+		current = nullptr;
 	}
-	back = back->getPrevious();
+	else if (back == current)
+	{
+		current = back->getPrevious();
+	}
+	if (back == front)
+	{
+		front = nullptr;
+		back = nullptr;
+	}
+	else
+	{
+		back = back->getPrevious();
+	}
+	if (back != nullptr)
+	{
+		back->setNext(nullptr);
+	}
 	size--;
 	return result;
+}
+
+template<class G>
+inline G DoubleLinkedList<G>::removeCurrent()
+{
+	G result = current->getData();
+
+	if (current == front && current == back)
+	{
+		cout << "Current == Front == Back" << endl;
+		front = nullptr;
+		back = nullptr;
+		current = nullptr;
+	}
+	else if(current == front)
+	{
+		cout << "Current == Front" << endl;
+		current = current->getNext();
+		current->getPrevious()->setNext(nullptr);
+		current->getPrevious()->setPrevious(nullptr);
+		current->setPrevious(nullptr);
+		front = current;
+	}
+	else if(current == back)
+	{
+		cout << "Current == Back" << endl;
+		current = current->getPrevious();
+		current->getNext()->setPrevious(nullptr);
+		current->getNext()->setNext(nullptr);
+		current->setNext(nullptr);
+		back = current;
+	}
+	else
+	{
+		shared_ptr<ListNode<G>> tmp = current;
+
+		current->getPrevious()->setNext(current->getNext());
+		current->getNext()->setPrevious(current->getPrevious());
+		current = current->getNext();
+		tmp->setNext(nullptr);
+		tmp->setPrevious(nullptr);
+		tmp = nullptr;
+	}
+
+	size--;
+	return G();
 }
 
 template<class G>
@@ -244,5 +373,29 @@ inline void DoubleLinkedList<G>::moveBack()
 	if (current != front)
 	{
 		current = current->getPrevious();
+	}
+}
+
+template<class G>
+inline void DoubleLinkedList<G>::moveCurrentToFront()
+{
+	current = front;
+}
+
+template<class G>
+inline void DoubleLinkedList<G>::moveCurrentToBack()
+{
+	current = back;
+}
+
+template<class G>
+inline void DoubleLinkedList<G>::printList()
+{
+	moveCurrentToFront();
+
+	for (int i = 0; i < size; i++)
+	{
+		cout << current->getData() << endl;
+		moveForward();
 	}
 }
