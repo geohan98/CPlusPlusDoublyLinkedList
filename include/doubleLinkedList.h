@@ -3,7 +3,7 @@
 #include "listNode.h"
 
 /*! \class Double Linked List
-    \brief A double linked list data structure
+    \brief A Double Linked List data structure
 */
 
 
@@ -243,14 +243,14 @@ inline G DoubleLinkedList<G>::removeCurrent()
 
 	if (current == front && current == back)
 	{
-		cout << "Current == Front == Back" << endl;
+		//cout << "Current == Front == Back" << endl;
 		front = nullptr;
 		back = nullptr;
 		current = nullptr;
 	}
 	else if(current == front)
 	{
-		cout << "Current == Front" << endl;
+		//cout << "Current == Front" << endl;
 		current = current->getNext();
 		current->getPrevious()->setNext(nullptr);
 		current->getPrevious()->setPrevious(nullptr);
@@ -259,7 +259,7 @@ inline G DoubleLinkedList<G>::removeCurrent()
 	}
 	else if(current == back)
 	{
-		cout << "Current == Back" << endl;
+		//cout << "Current == Back" << endl;
 		current = current->getPrevious();
 		current->getNext()->setPrevious(nullptr);
 		current->getNext()->setNext(nullptr);

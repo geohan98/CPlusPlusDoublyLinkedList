@@ -29,6 +29,14 @@ int main() /** Entry point for the application */
 	cout << "<--Generate List-->" << endl << endl;
 	myList.printList();
 
+	cout << endl << "<--Push Front-->" << endl << endl;
+	myList.pushFront(99);
+	myList.printList();
+
+	cout << endl << "<--Push Back-->" << endl << endl;
+	myList.pushBack(22);
+	myList.printList();
+
 	cout << endl << "<--Sorting List Accending-->" << endl << endl;
 	myList.sortAccending();
 	myList.printList();
@@ -46,6 +54,11 @@ int main() /** Entry point for the application */
 	myList.moveBack();
 	cout << "Current = " << myList.getCurrent() << endl;
 
+	cout << endl << "<--Move Current Forward-->" << endl << endl;
+	cout << "Current = " << myList.getCurrent() << endl;
+	myList.moveForward();
+	cout << "Current = " << myList.getCurrent() << endl;
+
 	cout << endl << "<--Remove Current-->" << endl << endl;
 	myList.removeCurrent();
 	myList.printList();
@@ -54,6 +67,13 @@ int main() /** Entry point for the application */
 	cout << "Current = " << myList.getCurrent() << endl;
 	myList.pushFrontCurrent(33);
 	myList.printList();
+
+	cout << endl << "<--Push Behind Current-->" << endl << endl;
+	cout << "Current = " << myList.getCurrent() << endl;
+	myList.pushBackCurrent(67);
+	myList.printList();
+
+
 
 	while (myList.getSize() != 0)
 	{
