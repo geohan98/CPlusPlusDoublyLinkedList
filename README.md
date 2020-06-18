@@ -3,5 +3,4 @@ Short second year coursework where we had to build a doubly linked list data str
 
 # Skills Used
 * C++
-* Memory Mangement
-
+* Memory Management
